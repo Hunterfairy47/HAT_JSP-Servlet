@@ -1135,6 +1135,13 @@ h1, h2, h3, h4, h5, h6, figure {
   position: relative;
   color: #fff !important;
 }
+
+#footer-logo {
+    margin: 0 auto 20px;
+    display: table;
+    padding-bottom: 20px;
+}
+
 #fh5co-footer .overlay {
   position: absolute;
   top: 0;

@@ -32,23 +32,22 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-2">
-                            <div id="fh5co-logo"><a href="index.jsp"><i class="icon-study"></i>Educ<span>.</span></a></div>
+                            <div id="fh5co-logo"><a href="index.jsp"><i class="icon-study"></i>&ensp;HatQuiz</a></div>
                         </div>
                         <div class="col-xs-10 text-right menu-1">
                             <ul>
-                                <li class="active"><a href="index.jsp">Trang chủ</a></li>                                   
+                                <li class="active"><a href="index.jsp">TRANG CHỦ</a></li>                                   
                                 <li class="has-dropdown">
-                                    <a href="blog.html">Môn thi</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Tất cả</a></li>
-                                        <li><a href="#">Toán</a></li>
-                                        <li><a href="#">Lý</a></li>
-                                        <li><a href="#">Hóa</a></li>
-                                        <li><a href="#">Sinh</a></li>
-                                        <li><a href="#">Tiếng Anh</a></li>
+                                    <a href="blog.html">THI THPTQG</a>
+                                    <ul class="dropdown">                                        
+                                        <li><a href="#">TOÁN HỌC</a></li>
+                                        <li><a href="#">VẬT LÝ</a></li>
+                                        <li><a href="#">HÓA HỌC</a></li>
+                                        <li><a href="#">SINH HỌC</a></li>
+                                        <li><a href="#">TIẾNG ANH</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html">Diễn đàn</a></li>
+                                <li><a href="contact.html">DIỄN ĐÀN</a></li>
                                 <li class="btn-cta"><a href="#"><span>Đăng nhập</span></a></li>
                                 <li class="btn-cta"><a href="#"><span>Đăng ký</span></a></li>
                             </ul>

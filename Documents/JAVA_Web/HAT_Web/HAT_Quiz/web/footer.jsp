@@ -13,62 +13,50 @@
     </head>
     <body>
         <footer id="fh5co-footer" role="contentinfo" style="background-image: url(images/img_bg_4.jpg);">
-            <div class="overlay"></div>
+            <div class="overlay"></div>           
             <div class="container">
                 <div class="row row-pb-md">
                     <div class="col-md-3 fh5co-widget">
-                        <h3>About Education</h3>
-                        <p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
+                        <h3>HatQuiz</h3>
+                        <p>Tổng hợp đề thi trắc nghiệm online THPT QG của các môn Toán, Tiếng Anh, Vật lý, Hóa học, Sinh học kèm đáp án và lời giải chi tiết.</p>
                     </div>
                     <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1 fh5co-widget">
-                        <h3>Learning</h3>
+                        <h3>THI THPT QG</h3>
                         <ul class="fh5co-footer-links">
-                            <li><a href="#">Course</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Terms</a></li>
-                            <li><a href="#">Meetups</a></li>
+                            <li><a href="#">Môn Toán</a></li>
+                            <li><a href="#">Môn Lý</a></li>
+                            <li><a href="#">Môn Hóa</a></li>
+                            <li><a href="#">Môn Sinh</a></li>
+                            <li><a href="#">Môn Anh</a></li>
                         </ul>
                     </div>
 
                     <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1 fh5co-widget">
-                        <h3>Learn &amp; Grow</h3>
+                        <h3>ĐỀ KIỂM TRA</h3>
                         <ul class="fh5co-footer-links">
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Privacy</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                            <li><a href="#">Handbook</a></li>
-                            <li><a href="#">Held Desk</a></li>
+                            <li><a href="#">Đề thi HK1,HK2</a></li>
+                            <li><a href="#">Kiểm tra 1 tiết</a></li>
+                            <li><a href="#">Kiểm tra 15 phút</a></li>                            
                         </ul>
                     </div>
 
-                    <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1 fh5co-widget">
-                        <h3>Engage us</h3>
+                    <div class="col-md-4 col-sm-4 col-xs-6 col-md-push-1 fh5co-widget">
+                        <h3>THÔNG TIN LIÊN HỆ</h3>
                         <ul class="fh5co-footer-links">
-                            <li><a href="#">Marketing</a></li>
-                            <li><a href="#">Visual Assistant</a></li>
-                            <li><a href="#">System Analysis</a></li>
-                            <li><a href="#">Advertise</a></li>
+                            <li><a href="#">Địa chỉ: SỐ 113, đường Nguyễn Tất Thành, Q4, TP HCM</a></li>
+                            <li><a href="#">Điện thoại: 0123456789</a></li>
+                            <li><a href="#">Email: HatQuiz@gmail.com</a></li>                            
                         </ul>
                     </div>
-
-                    <div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1 fh5co-widget">
-                        <h3>Legal</h3>
-                        <ul class="fh5co-footer-links">
-                            <li><a href="#">Find Designers</a></li>
-                            <li><a href="#">Find Developers</a></li>
-                            <li><a href="#">Teams</a></li>
-                            <li><a href="#">Advertise</a></li>
-                            <li><a href="#">API</a></li>
-                        </ul>
-                    </div>
+                    
                 </div>
 
                 <div class="row copyright">
                     <div class="col-md-12 text-center">
-                        <p>
-                            <small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small> 
-                            <small class="block">Designed by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> &amp; <a href="https://www.pexels.com/" target="_blank">Pexels</a></small>
+                        <p>                            
+                            <small class="block">
+                                Copyright © 2020 by HatQuiz.net
+                            </small>
                         </p>
                     </div>
                 </div>
