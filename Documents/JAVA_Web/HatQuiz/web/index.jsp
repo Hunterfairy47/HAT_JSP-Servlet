@@ -1,9 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : Mar 15, 2021, 4:50:23 PM
-    Author     : Admin
---%>
-
+<%@page import="DAO.QuizDAO"%>
 <%@page import="model.Subject"%>
 <%@page import="DAO.SubjectDAO"%>
 
@@ -67,6 +62,7 @@
     <body>
         <%
             SubjectDAO subjectDAO = new SubjectDAO();
+            QuizDAO quizDAO = new QuizDAO();
         %>
 
         <div id="page">
@@ -83,11 +79,11 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6 text-center animate-box">
                                 <div class="services">
-                                    <a class="icon" href="quiz.jsp">
+                                    <a class="icon" href="quiz.jsp?subject=all">
                                         <i class="fa fa-graduation-cap"></i>
                                     </a>
                                     <div class="desc">
-                                        <h3><a href="quiz.jsp">Tất cả</a></h3>
+                                        <h3><a href="quiz.jsp?subject=all">Tất cả</a></h3>
                                         <p>Biết thì nói là biết. Không biết thì nói là không biết. Thế mới gọi là biết.<br> <b><i>"Khổng Tử"</i></b></p>
                                     </div>
                                 </div>
@@ -304,14 +300,12 @@
         <script src="js/main.js"></script>
         <script>
             var d = new Date(new Date().getTime() + 1000 * 120 * 120 * 2000);
-
             // default example
             simplyCountdown('.simply-countdown-one', {
                 year: d.getFullYear(),
                 month: d.getMonth() + 1,
                 day: d.getDate()
             });
-
             //jQuery example
             $('#simply-countdown-losange').simplyCountdown({
                 year: d.getFullYear(),
@@ -322,4 +316,3 @@
         </script>
     </body>
 </html>
-

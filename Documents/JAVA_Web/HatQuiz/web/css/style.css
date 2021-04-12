@@ -533,7 +533,7 @@ figure {
   left: 0;
   right: 0;
   content: "";
-  background: rgb(45,108,223);
+  background: rgba(0, 0, 0, 0.5);
 }
 .fh5co-counters .counter-wrap {
   border: 1px solid red !important;

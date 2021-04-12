@@ -3,11 +3,11 @@
     Created on : Mar 17, 2021, 11:11:24 PM
     Author     : Admin
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.List"%>
 <%@page import="model.Subject"%>
 <%@page import="DAO.SubjectDAO"%>
 <%@page import="model.Quiz"%>
-<%@page import="DAO.QuizDAO"%>
+<%@page import="DAO.QuizDAO"%>   
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,7 +31,7 @@
         <meta property="og:image" content="" />
         <meta property="og:url" content="" />
         <meta property="og:site_name" content="" />
-        <meta property="og:description" content="" />
+        <meta property="og:descript;ion" content="" />
         <meta name="twitter:title" content="" />
         <meta name="twitter:image" content="" />
         <meta name="twitter:url" content="" />
@@ -89,17 +89,25 @@
                 if (request.getParameter("subject") != null) {
                     SubjectID = request.getParameter("subject");
                 }
-            %>        
-
+                String sub = request.getParameter("subject");
+                List<Quiz> list = null;
+                if (sub.trim().equals("all")) {
+                    list = quizDAO.getListQuiz();
+                } else {
+                    int sid = Integer.parseInt(sub.trim());
+                    list = quizDAO.getListQuizBySubject(sid);
+                }              
+            %>  
             <jsp:include page="header.jsp"></jsp:include>    
                 <div class="breadcrumb-wrap">
                     <div class="container-fluid">
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
                             <li class="breadcrumb-item">Thi THPT QG</li>
                         </ul>
                     </div>
-                </div>         
+                </div>
+
                 <div id="fh5co-course">
                     <div class="container">
                         <div class="animate-box mb-5">
@@ -107,38 +115,31 @@
                                 <h2>Luyện thi trắc nghiệm online - Miễn phí</h2>
                             </div>
                             <div class="menu_monthi" id="menu_monthi">
-                            <c:forEach var = "item" >
-                            <a href="">
-                                <button class="btn monthiactive">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    Tất cả
-                                    <span>(100)</span>
-                                </button>
-                            </a>
-                                
+                                <a href="quiz.jsp?subject=all">
+                                    <button class="btn monthiactive">
+                                        <i class="fa fa-graduation-cap"></i>
+                                        Tất cả
+                                        <span>(100)</span>
+                                    </button>
+                                </a>
                             <%
-                                int count = 0;
                                 for (Subject s : subjectDAO.getListSubject()) {
-                                    if (SubjectID == SubjectID) {
-                                        count++;
-                                    }
                             %>
                             <a href="quiz.jsp?subject=<%=s.getSubjectID()%>">
                                 <button class="btn">
                                     <i class="<%=s.getIcon()%>"></i>
                                     <%=s.getSubjectName()%>
-                                    <span>(<%=count%>)</span>
+                                    <span>(100)</span>
                                 </button>
                             </a>
                             <%
                                 }
-                            %>        
+                            %> 
                         </div>
                     </div>
-
                     <div class="row">
                         <%
-                            for (Quiz q : quizDAO.getListQuiz()) {
+                            for (Quiz q : list) {
                         %>    
                         <div class="col-md-6 animate-box">
                             <div class="course">
@@ -150,7 +151,7 @@
                                     <p>
                                         <span>
                                             <i class="fa fa-bars"> </i>
-                                            <a href="">Môn <%=q.getQuizName()%></a>
+                                            <a href="">Môn <%=q.getSubject()%></a>
                                         </span>
                                         <span>
                                             <i class="fa fa-question-circle"> </i>

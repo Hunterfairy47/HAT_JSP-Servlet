@@ -3,11 +3,13 @@
     Created on : Mar 15, 2021, 4:39:22 PM
     Author     : Admin
 --%>
-<%@page import="java.util.List"%>
 <%@page import="model.Subject"%>
 <%@page import="DAO.SubjectDAO"%>
 <%@page import="model.Quiz"%>
 <%@page import="DAO.QuizDAO"%>
+<%@page import="model.Users"%>
+<%@page import="DAO.UserDAO"%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,7 +22,14 @@
         <%
             SubjectDAO subjectDAO = new SubjectDAO();
             QuizDAO quizDAO = new QuizDAO();
-            List<Quiz> list = quizDAO.getListQuiz();             
+        %>
+        <%
+            Users u = new Users();
+            if (session.getAttribute("user") != null) {
+                u = (Users) session.getAttribute("user");
+            } else {
+                u.setUserName("");
+            }
         %>
         <nav class="fh5co-nav" role="navigation">
             <div class="top">
@@ -48,20 +57,37 @@
                             <ul>
                                 <li class="active"><a href="index.jsp">TRANG CHỦ</a></li>                                   
                                 <li class="has-dropdown">
-                                    <a href="quiz.jsp">THI THPTQG</a>
-                                    <ul class="dropdown">  
+                                    <a href="quiz.jsp?subject=all">THI THPTQG</a>
+                                    <ul class="dropdown">                                        
                                         <%
                                             for (Subject s : subjectDAO.getListSubject()) {
                                         %>
                                         <li><a href="quiz.jsp?subject=<%=s.getSubjectID()%>"><%=s.getSubjectName()%></a></li>                                    
-                                        <%
-                                            }
-                                        %>
+                                            <%
+                                                }
+                                            %>
                                     </ul>
                                 </li>
                                 <li><a href="contact.html">DIỄN ĐÀN</a></li>
+                                    <%
+                                        if (u.getUserName() == null) {
+
+                                    %>
                                 <li class="btn-cta"><a href="login.jsp"><span>Đăng nhập</span></a></li>
                                 <li class="btn-cta"><a href="register.jsp"><span>Đăng ký</span></a></li>
+                                    <%                                    } else {
+                                    %>
+                                <li class="has-dropdown">
+                                    <a href="#"><%= u.getUserName()%></a>
+                                    <ul class="dropdown">      
+                                        <li><a href="#"><span>Thông tin</span></a></li>
+                                        <li><a href="LogOutServlet"><span>Đăng xuất</span></a></li>
+                                    </ul>   
+                                </li>
+
+                                <%}
+                                %>
+
                             </ul>
                         </div>
                     </div>
