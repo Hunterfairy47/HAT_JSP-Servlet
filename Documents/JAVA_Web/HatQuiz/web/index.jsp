@@ -1,6 +1,11 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page import="model.Quiz"%>
+<%@page import="controller.SessionCounter"%>
+<%@page import="DAO.UserDAO"%>
 <%@page import="DAO.QuizDAO"%>
 <%@page import="model.Subject"%>
 <%@page import="DAO.SubjectDAO"%>
+<%@page import="DAO.ViewDAO"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -58,46 +63,74 @@
         <script src="js/respond.min.js"></script>
         <![endif]-->
 
+        <script id="GridToolbarTemplate" type="text/x-kendo-template">    
+            <nav id="breadcrumb"></nav>
+        </script>     
+
     </head>
     <body>
         <%
             SubjectDAO subjectDAO = new SubjectDAO();
             QuizDAO quizDAO = new QuizDAO();
+            ViewDAO viewDAO = new ViewDAO();
+            UserDAO userDAO = new UserDAO();
         %>
 
         <div id="page">
             <jsp:include page="header.jsp"></jsp:include>
             <jsp:include page="banner.jsp"></jsp:include>
-                <div id="fh5co-course-categories">
-                    <div class="container">
-                        <div class="row animate-box">
-                            <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-                                <h2>Các môn thi</h2>
-                                <p>Có làm thì mới có ăn, không làm mà đòi ăn thì chỉ có ăn ... ăn :poop:</p>
-                            </div>
+            <%
+                // Tổng lượt truy cập  
+                int view = 0;
+                view = viewDAO.getViews();
+                application.setAttribute("view", view);
+                if (view != 0) {
+                    if (session.isNew()) {
+                        viewDAO.updateView();
+                    }
+                }
+
+                // Tổng học viên
+                int users = userDAO.countUser();
+                request.setAttribute("users", users);
+
+                // Đang truy cập
+                SessionCounter counter = (SessionCounter) session.getAttribute(SessionCounter.COUNTER);
+
+                // Tổng đề thi
+                int countQ = quizDAO.countQuiz();
+                request.setAttribute("countQ", countQ);
+
+            %>
+            <div id="fh5co-course-categories">
+                <div class="container">
+                    <div class="row animate-box">
+                        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+                            <h2>Các môn thi</h2>
+                            <p>Có làm thì mới có ăn, không làm mà đòi ăn thì chỉ có ăn ... ăn :poop:</p>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4 col-sm-6 text-center animate-box">
-                                <div class="services">
-                                    <a class="icon" href="quiz.jsp?subject=all">
-                                        <i class="fa fa-graduation-cap"></i>
-                                    </a>
-                                    <div class="desc">
-                                        <h3><a href="quiz.jsp?subject=all">Tất cả</a></h3>
-                                        <p>Biết thì nói là biết. Không biết thì nói là không biết. Thế mới gọi là biết.<br> <b><i>"Khổng Tử"</i></b></p>
-                                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 text-center animate-box">
+                            <div class="services">
+                                <a class="icon" href="quiz.jsp?pages=1">
+                                    <i class="fa fa-graduation-cap"></i>
+                                </a>
+                                <div class="desc">
+                                    <h3><a href="quiz.jsp?pages=1">Tất cả</a></h3>
+                                    <p>Biết thì nói là biết. Không biết thì nói là không biết. Thế mới gọi là biết.<br> <b><i>"Khổng Tử"</i></b></p>
                                 </div>
                             </div>
-                        <%
-                            for (Subject s : subjectDAO.getListSubject()) {
+                        </div>
+                        <%                            for (Subject s : subjectDAO.getListSubject()) {
                         %>
                         <div class="col-md-4 col-sm-6 text-center animate-box">
                             <div class="services">
-                                <a class="icon" href ="quiz.jsp?subject=<%=s.getSubjectID()%>">
+                                <a class="icon" href ="quiz.jsp?subject=<%=s.getSubjectID()%>&pages=1">
                                     <i class="<%=s.getIcon()%>"></i>
                                 </a>
                                 <div class="desc">
-                                    <h3><a href="quiz.jsp?subject=<%=s.getSubjectID()%>"><%=s.getSubjectName()%></a></h3>
+                                    <h3><a href="quiz.jsp?subject=<%=s.getSubjectID()%>&pages=1"><%=s.getSubjectName()%></a></h3>
                                     <p id="test"><%=s.getDescription()%></p>
                                 </div>
                             </div>
@@ -117,22 +150,22 @@
                             <div class="row">
                                 <div class="col-md-3 col-sm-6 text-center animate-box">
                                     <span class="icon"><i class="icon-world"></i></span>
-                                    <span class="fh5co-counter js-counter" data-from="0" data-to="3297" data-speed="5000" data-refresh-interval="50"></span>
+                                    <span class="fh5co-counter js-counter" data-from="0" data-to="<%=view%>" data-speed="5000" data-refresh-interval="50"></span>
                                     <span class="fh5co-counter-label">Tổng lượt truy cập</span>
                                 </div>
                                 <div class="col-md-3 col-sm-6 text-center animate-box">
                                     <span class="icon"><i class="icon-study"></i></span>
-                                    <span class="fh5co-counter js-counter" data-from="0" data-to="3700" data-speed="5000" data-refresh-interval="50"></span>
+                                    <span class="fh5co-counter js-counter" data-from="0" data-to="<%=users%>" data-speed="5000" data-refresh-interval="50"></span>
                                     <span class="fh5co-counter-label">Số lượng học viên</span>
                                 </div>
                                 <div class="col-md-3 col-sm-6 text-center animate-box">
                                     <span class="icon"><i class="fas fa-bolt"></i></span>
-                                    <span class="fh5co-counter js-counter" data-from="0" data-to="5034" data-speed="5000" data-refresh-interval="50"></span>
+                                    <span class="fh5co-counter js-counter" data-from="0" data-to="<%=counter.getActiveSessionNumber()%>" data-speed="5000" data-refresh-interval="50"></span>
                                     <span class="fh5co-counter-label">Đang truy cập</span>
                                 </div>
                                 <div class="col-md-3 col-sm-6 text-center animate-box">
                                     <span class="icon"><i class="icon-book2"></i></span>
-                                    <span class="fh5co-counter js-counter" data-from="0" data-to="1080" data-speed="5000" data-refresh-interval="50"></span>
+                                    <span class="fh5co-counter js-counter" data-from="0" data-to="<%=countQ%>" data-speed="5000" data-refresh-interval="50"></span>
                                     <span class="fh5co-counter-label">Số lượng đề thi</span>
                                 </div>
                             </div>
@@ -145,79 +178,32 @@
                 <div class="container">
                     <div class="row animate-box">
                         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-                            <h2>Đề thi nổi bật</h2>
+                            <h2>Đề thi mới nhất</h2>
                             <p>" Những gì chúng ta biết ngày hôm nay sẽ lỗi thời vào ngày hôm sau. Nếu chúng ta ngừng học thì chúng ta sẽ ngừng phát triển."</p>
                         </div>
                     </div>
                     <div class="row">
+                        <%
+                            for (Quiz q : quizDAO.getListQuiz(1, 4)) {
+                        %>    
                         <div class="col-md-6 animate-box">
                             <div class="course">
-                                <a href="#" class="course-img" style="background-image: url(images/project-1.jpg);">
+                                <a href="detail.jsp" class="course-img" style="background-image: url(<%=q.getImage()%>  );">
                                 </a>
                                 <div class="desc">
-                                    <h3><a href="#">Đề thi tốt nghiệp THPT môn Toán năm 2020</a></h3>
+                                    <h3><a href="detail.jsp""><%=q.getQuizName()%></a></h3>
                                     <p style="font-size: 15px; display: grid" class="ltin">
-                                        <span><i class="fa fa-bars" aria-hidden="true"></i> <a href="thi-trac-nghiem/mon-toan.html">Môn Toán</a></span>                                             
-                                        <span><i class="fa fa-question-circle" aria-hidden="true"></i> Số câu hỏi: <b>50 câu</b> </span>
-                                        <span><i class="fa fa-clock" aria-hidden="true"></i>  Thời gian: <b>90 phút</b></span> 
+                                        <span><i class="fa fa-bars" aria-hidden="true"></i> <a href="quiz.jsp?subjectID=<%=q.getSubjectID()%>&pages=1           "><%=q.getSubjectName()%></a></span>                                             
+                                        <span><i class="fa fa-question-circle" aria-hidden="true"></i> Số câu hỏi: <b><%=q.getTotalQuestion()%> </b> </span>
+                                        <span><i class="fa fa-clock" aria-hidden="true"></i>  Thời gian: <b><%=q.getTime()%></b></span> 
                                         <span><i class="fa fa-signal" aria-hidden="true"></i>  Lượt thi: 3071</span>
-                                        <span><i class="fas fa-edit" aria-hidden="true"></i>  Ngày đăng: 17/03/2021</span>
+                                        <span><i class="fas fa-edit" aria-hidden="true"></i>  Ngày đăng: <fmt:formatDate value="<%=q.getCreateDate()%>" pattern="dd-MM-yyyy"></fmt:formatDate></span>
                                     </p>
-                                    <span><a href="#" class="btn btn-primary btn-sm btn-course">Xem chi tiết</a></span>
+                                    <span><a href="detail.jsp" class="btn btn-primary btn-sm btn-course">Xem chi tiết</a></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 animate-box">
-                            <div class="course">
-                                <a href="#" class="course-img" style="background-image: url(images/project-2.jpg);">
-                                </a>
-                                <div class="desc">
-                                    <h3><a href="#">Đề thi tốt nghiệp THPT môn Lý năm 2020</a></h3>
-                                    <p style="font-size: 15px; display: grid" class="ltin">
-                                        <span><i class="fa fa-bars" aria-hidden="true"></i> <a href="thi-trac-nghiem/mon-toan.html">Môn Lý</a></span>                                             
-                                        <span><i class="fa fa-question-circle" aria-hidden="true"></i> Số câu hỏi: <b>50 câu</b> </span>
-                                        <span><i class="fa fa-clock" aria-hidden="true"></i>  Thời gian: <b>90 phút</b></span> 
-                                        <span><i class="fa fa-signal" aria-hidden="true"></i>  Lượt thi: 3071</span>
-                                        <span><i class="fas fa-edit" aria-hidden="true"></i>  Ngày đăng: 17/03/2021</span>
-                                    </p>
-                                    <span><a href="#" class="btn btn-primary btn-sm btn-course">Xem chi tiết</a></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 animate-box">
-                            <div class="course">
-                                <a href="#" class="course-img" style="background-image: url(images/project-3.jpg);">
-                                </a>
-                                <div class="desc">
-                                    <h3><a href="#">Đề thi tốt nghiệp THPT môn Hóa năm 2020</a></h3>
-                                    <p style="font-size: 15px; display: grid" class="ltin">                                           
-                                        <span><i class="fa fa-bars" aria-hidden="true"></i> <a href="thi-trac-nghiem/mon-toan.html">Môn Hóa</a></span>                                             
-                                        <span><i class="fa fa-question-circle" aria-hidden="true"></i> Số câu hỏi: <b>50 câu</b> </span>
-                                        <span><i class="fa fa-clock" aria-hidden="true"></i>  Thời gian: <b>90 phút</b></span> 
-                                        <span><i class="fa fa-signal" aria-hidden="true"></i>  Lượt thi: 3071</span>
-                                        <span><i class="fas fa-edit" aria-hidden="true"></i>  Ngày đăng: 17/03/2021</span>
-                                    </p>
-                                    <span><a href="#" class="btn btn-primary btn-sm btn-course">Xem chi tiết</a></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 animate-box">
-                            <div class="course">
-                                <a href="#" class="course-img" style="background-image: url(images/project-4.jpg);">
-                                </a>
-                                <div class="desc">
-                                    <h3><a href="#">Đề thi tốt nghiệp THPT môn Sinh năm 2020</a></h3>
-                                    <p style="font-size: 15px; display: grid" class="ltin">
-                                        <span><i class="fa fa-bars" aria-hidden="true"></i> <a href="thi-trac-nghiem/mon-toan.html">Môn Sinh</a></span>                                             
-                                        <span><i class="fa fa-question-circle" aria-hidden="true"></i> Số câu hỏi: <b>50 câu</b> </span>
-                                        <span><i class="fa fa-clock" aria-hidden="true"></i>  Thời gian: <b>90 phút</b></span> 
-                                        <span><i class="fa fa-signal" aria-hidden="true"></i>  Lượt thi: 3071</span>
-                                        <span><i class="fas fa-edit" aria-hidden="true"></i>  Ngày đăng: 17/03/2021</span>
-                                    </p>
-                                    <span><a href="#" class="btn btn-primary btn-sm btn-course">Xem chi tiết</a></span>
-                                </div>
-                            </div>
-                        </div>
+                        <%}%>
                     </div>
                 </div>
             </div>
